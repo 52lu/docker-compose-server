@@ -1,0 +1,28 @@
+version: '3.1'
+services:
+  nexus:
+    restart: always
+    image: sonatype/nexus3
+    container_name: nexus
+    ports:
+      - ${NEXUS_PORT}:8081
+    volumes:
+      - ${VOLUMES_PATH}/nexus:/nexus-data
+  
+### MySQL ################################################
+  mysql:
+    container_name: mysql-${MYSQL_VERSION}
+    build:
+      context: ./mysql
+      args:
+         - MYSQL_VERSION=${MYSQL_VERSION}
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - TZ=${WORKSPACE_TIMEZONE}
+    volumes:
+      - ${VOLUMES_PATH}/mysql:/var/lib/mysql
+    ports:
+      - "${MYSQL_PORT}:3306"
