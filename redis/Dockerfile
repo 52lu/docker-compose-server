@@ -1,6 +1,7 @@
-FROM redis:latest
+ARG REDIS_VERSION=latest
+FROM redis:${REDIS_VERSION}
 
-LABEL maintainer="Mahmoud Zalt <mahmoud@zalt.me>"
+LABEL maintainer="liuqinghui <liuqinghui1991@163.com>"
 
 ## For security settings uncomment, make the dir, copy conf, and also start with the conf, to use it
 #RUN mkdir -p /usr/local/etc/redis
