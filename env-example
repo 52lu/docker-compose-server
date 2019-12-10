@@ -1,8 +1,11 @@
 #资源目录
-VOLUMES_PATH=/service/volumes
+VOLUMES_PATH=./volumes
+# 时区
+TIME_ZONE=Asia/Shanghai
 
 #nexus
 NEXUS_PORT=8081
+NEXUS_VERSION=latest
 
 # MYSQL
 MYSQL_VERSION=5.7
@@ -11,3 +14,9 @@ MYSQL_USER=test
 MYSQL_PASSWORD=123456
 MYSQL_PORT=3306
 MYSQL_ROOT_PASSWORD=root
+
+# redis
+REDIS_PORT=6379
+
+# consul
+CONSUL_VERSION=latest

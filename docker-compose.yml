@@ -1,13 +1,16 @@
 version: '3.1'
 services:
   nexus:
-    restart: always
-    image: sonatype/nexus3
     container_name: nexus
+    build:
+      context: ./nexus
+      args:
+        - NEXUS_VERSION=${NEXUS_VERSION}
+    restart: always
     ports:
       - ${NEXUS_PORT}:8081
     volumes:
-      - ${VOLUMES_PATH}/nexus:/nexus-data
+      - ${VOLUMES_PATH}/nexus:/nexus
   
 ### MySQL ################################################
   mysql:
@@ -21,8 +24,26 @@ services:
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - TZ=${WORKSPACE_TIMEZONE}
+      - TZ=${TIME_ZONE}
     volumes:
       - ${VOLUMES_PATH}/mysql:/var/lib/mysql
     ports:
       - "${MYSQL_PORT}:3306"
+
+###################redis##################################
+  redis:
+    build: ./redis
+    volumes:
+      - ${VOLUMES_PATH}/redis:/data
+    ports:
+      - "${REDIS_PORT}:6379"
+
+###################redis##################################
+  consul:
+    build: ./consul
+    volumes:
+      - ${VOLUMES_PATH}/consul:/consul/data
+    ports:
+      - "8300-8302:8300-8302"
+      - "8500:8500"
+      - "8600:8600"
