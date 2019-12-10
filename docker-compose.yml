@@ -30,7 +30,7 @@ services:
     ports:
       - "${MYSQL_PORT}:3306"
 
-  ###################redis##################################
+###################redis##################################
   redis:
     build:
       context: ./redis
@@ -42,7 +42,7 @@ services:
     ports:
       - "${REDIS_PORT}:6379"
 
-  ###################redis##################################
+###################redis##################################
   consul:
     build:
       context: ./consul
@@ -56,7 +56,7 @@ services:
       - "8500:8500"
       - "8600:8600"
 
-  ### ElasticSearch ########################################
+### ElasticSearch ########################################
   elasticsearch:
     build:
       context: ./elasticsearch
@@ -90,3 +90,14 @@ services:
       - "${KIBANA_HTTP_PORT}:5601"
     depends_on:
       - elasticsearch
+### registry ##############################################
+  registry:
+    container_name: registry-${REGISTRY_VERSION}
+    build:
+      context: ./registry
+      args:
+        - REGISTRY_VERSION=${REGISTRY_VERSION}
+    volumes:
+      - ${VOLUMES_PATH}/registry:/var/lib/registry
+    ports:
+      - "${REGISTRY_PORT}:5000"
