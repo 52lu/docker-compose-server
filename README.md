@@ -18,6 +18,7 @@
 ```
 
 # 服务列表
+``` 
 ─ consul
 ─ elasticsearch
 ─ env-example
@@ -27,6 +28,8 @@
 ─ nexus
 ─ redis
 ─ volumes
+```
+
 
 # 使用介绍
 ## 获取项目
