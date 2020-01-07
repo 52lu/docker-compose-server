@@ -1,5 +1,13 @@
 version: '3.1'
+
+networks:
+  frontend:
+    driver: ${NETWORKS_DRIVER}
+  backend:
+    driver: ${NETWORKS_DRIVER}
+
 services:
+  ### nexus ################################################
   nexus:
     container_name: nexus
     build:
@@ -39,6 +47,9 @@ services:
     container_name: redis-${REDIS_VERSION}
     volumes:
       - ${VOLUMES_PATH}/redis:/data
+      - ./redis/redis-server.log:/var/log/redis/redis-server.log
+    environment:
+      - TZ=${TIME_ZONE}
     ports:
       - "${REDIS_PORT}:6379"
 
@@ -58,19 +69,20 @@ services:
 
   ### ElasticSearch ########################################
   elasticsearch:
+    container_name: elasticsearch-${ELASTICSEARCH_VERSION}
     build:
       context: ./elasticsearch
       args:
         - ELASTICSEARCH_VERSION=${ELASTICSEARCH_VERSION}
-    container_name: elasticsearch-${ELASTICSEARCH_VERSION}
-    volumes:
-      - ${VOLUMES_PATH}/elasticsearch:/usr/share/elasticsearch/data
     environment:
       - cluster.name=${ELASTICSEARCH_CLUSTER_NAME}
-      - node.name=laradock-${ELASTICSEARCH_NODE_NAME}
+      - node.name=${ELASTICSEARCH_NODE_NAME}
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - cluster.initial_master_nodes=${ELASTICSEARCH_NODE_NAME}
+    volumes:
+      - ${VOLUMES_PATH}/elasticsearch:/usr/share/elasticsearch/data
+      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     ulimits:
       memlock:
         soft: -1
@@ -78,15 +90,43 @@ services:
     ports:
       - "${ELASTICSEARCH_HOST_HTTP_PORT}:9200"
       - "${ELASTICSEARCH_HOST_TRANSPORT_PORT}:9300"
-
-### Kibana ##############################################
+    networks:
+      - frontend
+      - backend
+  ### Logstash ##############################################
+  logstash:
+    container_name: logstash-${LOGSTASH_VERSION}
+    build:
+      context: ./logstash
+      args:
+        - LOGSTASH_VERSION=${LOGSTASH_VERSION}
+    volumes:
+      - './logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml'
+      - './logstash/pipeline:/usr/share/logstash/pipeline'
+    ports:
+      - '5001:5001'
+    environment:
+      LS_JAVA_OPTS: '-Xmx1g -Xms1g'
+    env_file:
+      - .env
+    networks:
+      - frontend
+      - backend
+    depends_on:
+      - elasticsearch
+  ### Kibana ##############################################
   kibana:
     container_name: kibana-${KIBANA_VERSION}
     build:
       context: ./kibana
       args:
         - KIBANA_VERSION=${KIBANA_VERSION}
+    volumes:
+      - './kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml'
     ports:
       - "${KIBANA_HTTP_PORT}:5601"
+    networks:
+      - frontend
+      - backend
     depends_on:
       - elasticsearch

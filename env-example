@@ -1,13 +1,19 @@
-#资源目录
+#################### Common ####################
+# 资源目录(需要手动创建，并赋可写权限)
 VOLUMES_PATH=./volumes
 # 时区
 TIME_ZONE=Asia/Shanghai
+# 前缀(网络、容器); 不设置，则默认当前文件名为前缀
+COMPOSE_PROJECT_NAME=DockCompose
+# 网络配置
+NETWORKS_DRIVER=bridge
 
-#nexus
+
+#################### NEXUS ####################
 NEXUS_PORT=8081
 NEXUS_VERSION=latest
 
-# MYSQL
+#################### MYSQL ####################
 MYSQL_VERSION=5.7
 MYSQL_DATABASE=default
 MYSQL_USER=test
@@ -15,20 +21,24 @@ MYSQL_PASSWORD=123456
 MYSQL_PORT=3306
 MYSQL_ROOT_PASSWORD=root
 
-# redis
+#################### redis ####################
 REDIS_PORT=6379
 REDIS_VERSION=latest
 
-# consul
+#################### consul ####################
 CONSUL_VERSION=latest
 
-# ELASTICSEARCH
+#################### ELASTICSEARCH ####################
 ELASTICSEARCH_HOST_HTTP_PORT=9200
 ELASTICSEARCH_HOST_TRANSPORT_PORT=9300
 ELASTICSEARCH_VERSION=7.5.0
-ELASTICSEARCH_CLUSTER_NAME=es-cluster
+ELASTICSEARCH_CLUSTER_NAME=elasticsearch
 ELASTICSEARCH_NODE_NAME=es-node
 
-# KIBANA
+#################### KIBANA ####################
 KIBANA_HTTP_PORT=5601
 KIBANA_VERSION=7.5.0
+
+#################### logstash ####################
+LOGSTASH_VERSION=7.5.0
+
