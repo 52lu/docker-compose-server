@@ -32,14 +32,19 @@
 
 
 # 使用介绍
-## 获取项目
+## 1.获取项目
 ```bash
 git clone https://github.com/52lu/docker-compose-server.git
 ```
-## 安装docker-compose
+## 2.安装docker-compose
+```bash
+# 下载
+curl -L https://github.com/docker/compose/releases/download/1.25.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+# 赋权
+chmod +x /usr/local/bin/docker-compose
+```
 
-
-## 启动服务
+## 3.启动服务
 
 ```bash
 docker-compose up -d xxx
