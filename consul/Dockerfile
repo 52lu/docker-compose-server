@@ -1,8 +1,13 @@
 ARG CONSUL_VERSION=latest
 FROM consul:${CONSUL_VERSION}
 
-
 LABEL maintainer="liuqinghui <liuqinghui1991@163.com>"
+
+# 设置时区
+ARG TZ=UTC
+ENV TZ ${TZ}
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 
 
 VOLUME /consul/data

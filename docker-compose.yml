@@ -9,7 +9,7 @@ networks:
 services:
   ### nexus ################################################
   nexus:
-    container_name: nexus
+    container_name: nexus-${NEXUS_VERSION}
     build:
       context: ./nexus
       args:
@@ -17,6 +17,8 @@ services:
     restart: always
     ports:
       - ${NEXUS_PORT}:8081
+    environment:
+      - TZ=${TIME_ZONE}
     volumes:
       - ${VOLUMES_PATH}/nexus:/nexus
 
@@ -38,7 +40,7 @@ services:
     ports:
       - "${MYSQL_PORT}:3306"
 
-  ###################redis##################################
+  ### redis ##################################
   redis:
     build:
       context: ./redis
@@ -53,7 +55,21 @@ services:
     ports:
       - "${REDIS_PORT}:6379"
 
-  ###################redis##################################
+  ### registry ##############################################
+  registry:
+    container_name: registry-${REGISTRY_VERSION}
+    build:
+      context: ./registry
+      args:
+        - REGISTRY_VERSION=${REGISTRY_VERSION}
+    volumes:
+      - ${VOLUMES_PATH}/registry:/var/lib/registry
+    environment:
+      - TZ=${TIME_ZONE}
+    ports:
+      - "${REGISTRY_PORT}:5000"
+
+  ### consul ##################################
   consul:
     build:
       context: ./consul
@@ -62,6 +78,8 @@ services:
     container_name: consul-${CONSUL_VERSION}
     volumes:
       - ${VOLUMES_PATH}/consul:/consul/data
+    environment:
+      - TZ=${TIME_ZONE}
     ports:
       - "8300-8302:8300-8302"
       - "8500:8500"
@@ -80,6 +98,7 @@ services:
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - cluster.initial_master_nodes=${ELASTICSEARCH_NODE_NAME}
+      - TZ=${TIME_ZONE}
     volumes:
       - ${VOLUMES_PATH}/elasticsearch:/usr/share/elasticsearch/data
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
@@ -125,6 +144,8 @@ services:
       - './kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml'
     ports:
       - "${KIBANA_HTTP_PORT}:5601"
+    environment:
+      - TZ=${TIME_ZONE}
     networks:
       - frontend
       - backend
