@@ -151,3 +151,13 @@ services:
       - backend
     depends_on:
       - elasticsearch
+  ### MongoDB ##############################################
+  mongo:
+    build: ./mongo
+    ports:
+      - "${MONGODB_PORT}:27017"
+    volumes:
+      - ${VOLUMES_PATH}/mongo:/data/db
+      - ${VOLUMES_PATH}/mongo_config:/data/configdb
+    networks:
+      - backend
