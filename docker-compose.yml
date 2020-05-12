@@ -1,10 +1,16 @@
 version: '3.1'
 
+## 加入已经存在得网络
 networks:
-  frontend:
-    driver: ${NETWORKS_DRIVER}
-  backend:
-    driver: ${NETWORKS_DRIVER}
+   default:
+     external:
+          name: workdock_default
+   frontend:
+     external:
+          name: workdock_frontend
+   backend:
+     external:
+          name: workdock_backend
 
 services:
   ### nexus ################################################
@@ -84,7 +90,9 @@ services:
       - "8300-8302:8300-8302"
       - "8500:8500"
       - "8600:8600"
-
+    networks:
+      - frontend
+      - backend
   ### ElasticSearch ########################################
   elasticsearch:
     container_name: elasticsearch-${ELASTICSEARCH_VERSION}
