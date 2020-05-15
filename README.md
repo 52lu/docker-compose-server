@@ -46,8 +46,34 @@ chmod +x /usr/local/bin/docker-compose
 
 ## 3.启动服务
 
+### 3.1 以启动mongo为示例
 ```bash
-docker-compose up -d xxx
-```
+➜  docker_compose_server git:(master) ✗ docker-compose build mongo
+Building mongo
+Step 1/5 : FROM mongo:latest
+ ---> bcef5fd2979d
+Step 2/5 : LABEL maintainer="liuqinghui <liuqinghui1991@163.com>"
+ ---> Using cache
+ ---> fed01971acf4
+Step 3/5 : VOLUME /data/db /data/configdb
+ ---> Using cache
+ ---> 1696bc90fce6
+Step 4/5 : CMD ["mongod"]
+ ---> Using cache
+ ---> cc8baec43bf6
+Step 5/5 : EXPOSE 27017
+ ---> Using cache
+ ---> 6255839f2a97
+Successfully built 6255839f2a97
+Successfully tagged dockcompose_mongo:latest
+➜  docker_compose_server git:(master) ✗ docker-compose up -d mongo
+Creating dockcompose_mongo_1 ... done
+➜  docker_compose_server git:(master) ✗ docker-compose ps
+       Name                     Command             State            Ports
+------------------------------------------------------------------------------------
+dockcompose_mongo_1   docker-entrypoint.sh mongod   Up      0.0.0.0:27017->27017/tcp
+➜  docker_compose_server git:(master) ✗
 
+
+```
 

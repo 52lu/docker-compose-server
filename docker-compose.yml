@@ -159,6 +159,7 @@ services:
       - backend
     depends_on:
       - elasticsearch
+
   ### MongoDB ##############################################
   mongo:
     build: ./mongo
@@ -169,6 +170,7 @@ services:
       - ${VOLUMES_PATH}/mongo_config:/data/configdb
     networks:
       - backend
+
   ### MongoDB ##############################################
   zipkin:
     build: ./zipkin
@@ -185,5 +187,37 @@ services:
       - ZIPKIN_VERSION=${ZIPKIN_VERSION}
       - TZ=${TIME_ZONE}
     networks:
-      - frontend
       - backend
+
+  ### Grafana ################################################
+  grafana:
+    build: ./grafana
+    volumes:
+     - ${VOLUMES_PATH}/grafana:/var/lib/grafana
+    environment:
+     - GRAFANA_VERSION=${VOLUMES_PATH}
+    ports:
+     - "${GRAFANA_PORT}:3000"
+    networks:
+     - backend
+     - frontend
+
+  ### prometheus ################################################
+  prometheus:
+    build:
+      context: ./prometheus
+    volumes:
+      - ./prometheus:/etc/prometheus/
+      - ${VOLUMES_PATH}/prometheus:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    ports:
+      - "${PROMETHEUS_PORT}:9090"
+    networks:
+      - backend
+      - frontend
+
+
