@@ -107,6 +107,7 @@ services:
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - cluster.initial_master_nodes=${ELASTICSEARCH_NODE_NAME}
       - TZ=${TIME_ZONE}
+      - IK_VERSION=${IK_VERSION}
     volumes:
       - ${VOLUMES_PATH}/elasticsearch:/usr/share/elasticsearch/data
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml

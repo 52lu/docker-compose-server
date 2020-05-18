@@ -111,8 +111,10 @@ elasticsearch.hosts: ["http://elasticsearch:9200"]
 # metrics. Minimum is 100ms. Defaults to 5000.
 #ops.interval: 5000
 
-# Specifies locale to be used for all localizable strings, dates and number formats.
-#i18n.locale: "en"
+# 语言选择
+# i18n.locale: "en"
+i18n.locale: "zh-CN"
 
 # http://www.51niux.com/?id=210
+# 是否开启X-Pack， X-Pack是一个Elastic Stack扩展，它将安全性，警报，监视，报告和图形功能捆绑到一个易于安装的软件包中
 xpack.monitoring.ui.container.elasticsearch.enabled: false
