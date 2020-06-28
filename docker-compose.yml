@@ -172,7 +172,7 @@ services:
     networks:
       - backend
 
-  ### MongoDB ##############################################
+  ### Zipkin ##############################################
   zipkin:
     build: ./zipkin
     container_name: zipkin

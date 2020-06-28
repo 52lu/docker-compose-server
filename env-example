@@ -39,6 +39,9 @@ ELASTICSEARCH_VERSION=7.5.0
 ELASTICSEARCH_CLUSTER_NAME=elasticsearch
 ELASTICSEARCH_NODE_NAME=es-node
 
+#################### GRAFANA ####################
+GRAFANA_PORT=5600
+
 #################### KIBANA ####################
 KIBANA_HTTP_PORT=5601
 KIBANA_VERSION=7.5.0
@@ -47,8 +50,17 @@ KIBANA_VERSION=7.5.0
 #################### logstash ####################
 LOGSTASH_VERSION=7.5.0
 
-### MONGODB ###############################################
-
+### MONGODB ########################################
 MONGODB_PORT=27017
 
-
+##################### Zipkin ########################
+ZIPKIN_STORAGE_TYPE=mysql
+ZIPKIN_MYSQL_DB=zipkin
+ZIPKIN_MYSQL_USER=root
+ZIPKIN_MYSQL_PASS=root
+ZIPKIN_MYSQL_HOST=mysql
+ZIPKIN_MYSQL_TCP_PORT=3306
+ZIPKIN_VERSION=latest
+ZIPKIN_PORT=9411
+##################### PROMETHEUS_PORT ########################
+PROMETHEUS_PORT=9090
