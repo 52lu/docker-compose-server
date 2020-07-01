@@ -1,6 +1,5 @@
 ARG LOGSTASH_VERSION=latest
 
-#FROM docker.elastic.co/logstash/logstash:6.4.2
 FROM logstash:${LOGSTASH_VERSION}
 LABEL maintainer="liuqinghui <liuqinghui1991@163.com>"
 USER root
@@ -10,4 +9,4 @@ ADD ./pipeline/ /usr/share/logstash/pipeline/
 ADD ./config/ /usr/share/logstash/config/
 
 RUN logstash-plugin install logstash-input-jdbc
-
+RUN logstash-plugin install logstash-input-beats
