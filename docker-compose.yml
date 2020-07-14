@@ -137,9 +137,6 @@ services:
       LS_JAVA_OPTS: '-Xmx1g -Xms1g'
     env_file:
       - .env
-    networks:
-      - frontend
-      - backend
     depends_on:
       - elasticsearch
   ### Kibana ##############################################
@@ -155,9 +152,6 @@ services:
       - "${KIBANA_HTTP_PORT}:5601"
     environment:
       - TZ=${TIME_ZONE}
-    networks:
-      - frontend
-      - backend
     depends_on:
       - elasticsearch
 
@@ -169,8 +163,7 @@ services:
     volumes:
       - ${VOLUMES_PATH}/mongo:/data/db
       - ${VOLUMES_PATH}/mongo_config:/data/configdb
-    networks:
-      - backend
+
 
   ### Zipkin ##############################################
   zipkin:
@@ -187,8 +180,6 @@ services:
       - MYSQL_TCP_PORT=${ZIPKIN_MYSQL_TCP_PORT}
       - ZIPKIN_VERSION=${ZIPKIN_VERSION}
       - TZ=${TIME_ZONE}
-    networks:
-      - backend
 
   ### Grafana ################################################
   grafana:
@@ -199,9 +190,6 @@ services:
      - GRAFANA_VERSION=${VOLUMES_PATH}
     ports:
      - "${GRAFANA_PORT}:3000"
-    networks:
-     - backend
-     - frontend
 
   ### prometheus ################################################
   prometheus:
@@ -217,8 +205,5 @@ services:
       - '--web.console.templates=/usr/share/prometheus/consoles'
     ports:
       - "${PROMETHEUS_PORT}:9090"
-    networks:
-      - backend
-      - frontend
 
 
