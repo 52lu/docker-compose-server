@@ -1,16 +1,16 @@
 version: '3.1'
 
 ## 加入已经存在得网络
-#networks:
-#  default:
-#    external:
-#      name: workdock_default
-#  frontend:
-#    external:
-#      name: workdock_frontend
-#  backend:
-#    external:
-#      name: workdock_backend
+networks:
+  default:
+    external:
+      name: workdock_default
+  frontend:
+    external:
+      name: workdock_frontend
+  backend:
+    external:
+      name: workdock_backend
 
 services:
   ### nexus ################################################
