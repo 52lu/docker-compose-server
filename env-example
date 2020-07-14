@@ -8,7 +8,6 @@ COMPOSE_PROJECT_NAME=DockCompose
 # 网络配置
 NETWORKS_DRIVER=bridge
 
-
 #################### NEXUS ####################
 NEXUS_PORT=8081
 NEXUS_VERSION=latest

@@ -1,16 +1,11 @@
 version: '3.1'
 
-## 加入已经存在得网络
+## 自定义网络
 networks:
-  default:
-    external:
-      name: workdock_default
   frontend:
-    external:
-      name: workdock_frontend
+    driver: ${NETWORKS_DRIVER}
   backend:
-    external:
-      name: workdock_backend
+    driver: ${NETWORKS_DRIVER}
 
 services:
   ### nexus ################################################
