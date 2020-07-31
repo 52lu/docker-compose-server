@@ -25,8 +25,7 @@ services:
       build:
         context: ./workspace
         args:
-          - WORKSPACE_PHP_VERSION=${PHP_VERSION}
-          - WORKSPACE_VSERION_TAG=${WORKSPACE_VSERION_TAG}
+          - PHP_VERSION=${PHP_VERSION}
       volumes:
         - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
       extra_hosts:
@@ -50,9 +49,7 @@ services:
         context: .
         dockerfile: ./php-fpm/${PHP_VERSION}/Dockerfile
         args:
-          - PHP_FPM_TAG=${PHP_FPM_TAG}
           - PHP_VERSION=${PHP_VERSION}
-          - PHP_FPM_TAG_VERSION=${PHP_FPM_TAG_VERSION}
       volumes:
         - ./php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
         - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}

@@ -1,7 +1,5 @@
-ARG PHP_FPM_TAG
 ARG PHP_VERSION
-ARG PHP_FPM_TAG_VERSION
-FROM liuqinghui/php${PHP_VERSION}-fpm-${PHP_FPM_TAG}:${PHP_FPM_TAG_VERSION}
+FROM registry.cn-beijing.aliyuncs.com/liuqinghui/php-dev-env:php-fpm-${PHP_VERSION}
 LABEL maintainer="liuqinghui <liuqinghui1991@163.com>"
 
 COPY  php-fpm/laravel.ini /usr/local/etc/php/conf.d

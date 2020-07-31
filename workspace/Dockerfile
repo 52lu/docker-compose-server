@@ -1,4 +1,3 @@
-ARG WORKSPACE_PHP_VERSION
-ARG WORKSPACE_VSERION_TAG
-FROM liuqinghui/workspace-php${WORKSPACE_PHP_VERSION}:${WORKSPACE_VSERION_TAG}
+ARG PHP_VERSION
+FROM registry.cn-beijing.aliyuncs.com/liuqinghui/php-dev-env:workspace-${PHP_VERSION}
 LABEL maintainer="liuqinghui <liuqinghui1991@163.com>"
