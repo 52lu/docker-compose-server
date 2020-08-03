@@ -38,9 +38,11 @@ services:
       - TZ=${TIME_ZONE}
     volumes:
       - ${VOLUMES_PATH}/mysql:/var/lib/mysql
-    command: --default-authentication-plugin=mysql_native_password
+      - ${MYSQL_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
     ports:
       - "${MYSQL_PORT}:3306"
+    networks:
+      - backend
 
   ### redis ##################################
   redis:
@@ -56,6 +58,8 @@ services:
       - TZ=${TIME_ZONE}
     ports:
       - "${REDIS_PORT}:6379"
+    networks:
+      - backend
 
   ### registry ##############################################
   registry:
@@ -86,6 +90,8 @@ services:
       - "8300-8302:8300-8302"
       - "8500:8500"
       - "8600:8600"
+    networks:
+      - backend
   ### ElasticSearch ########################################
   elasticsearch:
     container_name: elasticsearch-${ELASTICSEARCH_VERSION}
@@ -129,6 +135,8 @@ services:
       LS_JAVA_OPTS: '-Xmx1g -Xms1g'
     env_file:
       - .env
+    networks:
+      - backend
     depends_on:
       - elasticsearch
   ### Kibana ##############################################
@@ -146,6 +154,8 @@ services:
       - TZ=${TIME_ZONE}
     depends_on:
       - elasticsearch
+    networks:
+      - backend
 
   ### MongoDB ##############################################
   mongo:
@@ -155,7 +165,8 @@ services:
     volumes:
       - ${VOLUMES_PATH}/mongo:/data/db
       - ${VOLUMES_PATH}/mongo_config:/data/configdb
-
+    networks:
+      - backend
 
   ### Zipkin ##############################################
   zipkin:
