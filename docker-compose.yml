@@ -38,6 +38,7 @@ services:
       - TZ=${TIME_ZONE}
     volumes:
       - ${VOLUMES_PATH}/mysql:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
     ports:
       - "${MYSQL_PORT}:3306"
 
