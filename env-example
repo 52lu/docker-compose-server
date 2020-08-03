@@ -19,6 +19,7 @@ MYSQL_USER=test
 MYSQL_PASSWORD=123456
 MYSQL_PORT=3306
 MYSQL_ROOT_PASSWORD=root
+MYSQL_ENTRYPOINT_INITDB=./mysql/docker-entrypoint-initdb.d
 
 #################### redis ####################
 REDIS_PORT=6379
