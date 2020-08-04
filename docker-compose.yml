@@ -111,7 +111,6 @@ services:
       volumes:
         - ${DATA_PATH_HOST}/mysql:/var/lib/mysql
         - ${MYSQL_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
-        - ${MYSQL_GO_ITEM}:/go
       ports:
         - "${MYSQL_PORT}:3306"
       networks:
