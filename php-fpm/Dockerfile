@@ -6,4 +6,7 @@ COPY  php-fpm/laravel.ini /usr/local/etc/php/conf.d
 COPY  php-fpm/opcache.ini /usr/local/etc/php/conf.d
 COPY  php-fpm/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 COPY  php-fpm/xlaravel.pool.conf /usr/local/etc/php-fpm.d/
+
+
+
 WORKDIR /var/www
