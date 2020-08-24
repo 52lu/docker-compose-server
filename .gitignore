@@ -2,3 +2,5 @@
 logs/*
 .env
 nginx-old
+nginx/sites/*.conf
+!nginx/sites/example.conf
