@@ -262,7 +262,7 @@ services:
         - 2375
       networks:
         - backend
-  ### PostgreSQL ###########################################
+### PostgreSQL ###########################################
     postgres:
       build: ./postgres
       volumes:
@@ -275,5 +275,22 @@ services:
         - POSTGRES_DB=${POSTGRES_DB}
         - POSTGRES_USER=${POSTGRES_USER}
         - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      networks:
+        - backend
+### EasySwoole ##############################################
+    easyswoole:
+      build:
+        context: ./easyswoole
+        args:
+          - CHANGE_SOURCE=${CHANGE_SOURCE}
+          - PHP_VERSION=${PHP_VERSION}
+          - EASYSWOOLE_PORT_LIST=${EASYSWOOLE_PORT_LIST}
+      volumes:
+        - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+      ports:
+        - "${EASYSWOOLE_PORT_LIST}:${EASYSWOOLE_PORT_LIST}"
+      tty: true # exited with code 0
+      extra_hosts:
+        - "dockerhost:${DOCKER_HOST_IP}"
       networks:
         - backend
