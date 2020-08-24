@@ -139,3 +139,6 @@ POSTGRES_PASSWORD=secret
 POSTGRES_PORT=5432
 POSTGRES_ENTRYPOINT_INITDB=./postgres/docker-entrypoint-initdb.d
 POSTGRES_VERSION=12.3
+
+### EasySwoole ##############################################
+EASYSWOOLE_PORT_LIST=9500-9505
