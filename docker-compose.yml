@@ -34,7 +34,7 @@ services:
         - "dockerhost:${DOCKER_HOST_IP}"
       ports:
         - "${WORKSPACE_SSH_PORT}:22"
-        - "${WORKSPACE_PORT_LIST}:8010-8020"
+        - "${WORKSPACE_PORT_LIST}:${WORKSPACE_PORT_LIST}"
       tty: true
       environment:
         - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
