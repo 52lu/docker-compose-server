@@ -68,7 +68,7 @@ PHP_IDE_CONFIG=serverName=laradock
 ### WORKSPACE #############################################
 WORKSPACE_SSH_PORT=2222
 WORKSPACE_VSERION_TAG=1.0
-WORKSPACE_PORT_LIST=10000-10010
+WORKSPACE_PORT_LIST=9500-9510
 
 ### PHP_FPM ###############################################
 PHP_FPM_FAKETIME=-0
@@ -138,8 +138,3 @@ POSTGRES_PASSWORD=secret
 POSTGRES_PORT=5432
 POSTGRES_ENTRYPOINT_INITDB=./postgres/docker-entrypoint-initdb.d
 POSTGRES_VERSION=12.3
-
-
-### easySwoole ##############################################
-EASYSWOOLE_PORT_LIST=9500-9505
-EASYSWOOLE_ITEM_DIR=/var/www/swoole-item
