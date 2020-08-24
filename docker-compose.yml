@@ -294,3 +294,5 @@ services:
         - "dockerhost:${DOCKER_HOST_IP}"
       networks:
         - backend
+      depends_on:
+        - workspace
