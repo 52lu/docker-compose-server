@@ -4,3 +4,4 @@ logs/*
 nginx-old
 nginx/sites/*.conf
 !nginx/sites/example.conf
+.DS_Store
