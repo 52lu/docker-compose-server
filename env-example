@@ -69,6 +69,8 @@ PHP_IDE_CONFIG=serverName=laradock
 WORKSPACE_SSH_PORT=2222
 WORKSPACE_VSERION_TAG=1.0
 WORKSPACE_PORT_LIST=9500-9505
+# true: Hyperf
+WORKSPACE_HYPERF_ENV=false
 
 ### PHP_FPM ###############################################
 PHP_FPM_FAKETIME=-0
