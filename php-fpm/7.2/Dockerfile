@@ -1,6 +1,5 @@
 ARG PHP_VERSION
-#FROM registry.cn-beijing.aliyuncs.com/liuqinghui/php-dev-env:php-fpm-${PHP_VERSION}
-FROM 172.30.0.51:5000/php-dev-env:php${PHP_VERSION}-fpm
+FROM registry.cn-beijing.aliyuncs.com/liuqinghui/php-dev-env:php-fpm-${PHP_VERSION}
 LABEL maintainer="liuqinghui <liuqinghui1991@163.com>"
 
 # 配置同步
