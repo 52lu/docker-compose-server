@@ -111,25 +111,25 @@ bootstrap.memory_lock: true
 # 同时设置bind_host和publish_host上面两个参数
 network.host: 0.0.0.0
 
-# 设置节点间交互的tcp端口,默认是9300
-# transport.tcp.port: 9300
+  # 设置节点间交互的tcp端口,默认是9300
+  # transport.tcp.port: 9300
 
-# 设置是否压缩tcp传输时的数据，默认为false,不压缩
-# transport.tcp.compress: true
+  # 设置是否压缩tcp传输时的数据，默认为false,不压缩
+  # transport.tcp.compress: true
 
-# 设置对外服务的http端口,默认为9200
-# http.port: 9200
+  # 设置对外服务的http端口,默认为9200
+  # http.port: 9200
 
-# 设置请求内容的最大容量,默认100mb
-# http.max_content_length: 100mb
+  # 设置请求内容的最大容量,默认100mb
+  # http.max_content_length: 100mb
 
-# 使用http协议对外提供服务,默认为true,开启
-# http.enabled: false
+  # 使用http协议对外提供服务,默认为true,开启
+  # http.enabled: false
 
 ###################### 使用head等插件监控集群信息，需要打开以下配置项 ###########
- http.cors.enabled: true
- http.cors.allow-origin: "*"
- http.cors.allow-credentials: true
+http.cors.enabled: true
+http.cors.allow-origin: "*"
+http.cors.allow-credentials: true
 
 ################################### Gateway ###################################
 # gateway的类型,默认为local即为本地文件系统,可以设置为本地文件系统
