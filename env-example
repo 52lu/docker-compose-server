@@ -8,6 +8,7 @@ COMPOSE_PROJECT_NAME=DockCompose
 # 网络配置
 NETWORKS_DRIVER=bridge
 
+
 #################### NEXUS ####################
 NEXUS_PORT=8081
 NEXUS_VERSION=latest
@@ -38,6 +39,7 @@ ELASTICSEARCH_HOST_TRANSPORT_PORT=9300
 ELASTICSEARCH_VERSION=7.5.0
 ELASTICSEARCH_CLUSTER_NAME=elasticsearch
 ELASTICSEARCH_NODE_NAME=es-node
+
 #################### GRAFANA ####################
 GRAFANA_PORT=5600
 
