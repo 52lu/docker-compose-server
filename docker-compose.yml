@@ -158,7 +158,7 @@ services:
       - backend
     ### EsHead ##############################################
   eshead:
-    container_name: eshead-${ESHEAD_VERSION}
+    container_name: eshead
     build:
       context: ./eshead
     ports:
