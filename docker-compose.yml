@@ -161,8 +161,6 @@ services:
     container_name: eshead-${ESHEAD_VERSION}
     build:
       context: ./eshead
-      args:
-        - ESHEAD_VERSION=${ESHEAD_VERSION}
     ports:
       - "${ESHEAD_HTTP_PORT}:9100"
     environment:

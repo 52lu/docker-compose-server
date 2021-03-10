@@ -1,5 +1,4 @@
-ARG ESHEAD_VERSION=latest
-FROM mobz/elasticsearch-head:${ESHEAD_VERSION}
+FROM mobz/elasticsearch-head:5
 LABEL maintainer="liuqinghui <liuqinghui1991@163.com>"
 
 # 设置时区
