@@ -127,9 +127,9 @@ network.host: 0.0.0.0
 # http.enabled: false
 
 ###################### 使用head等插件监控集群信息，需要打开以下配置项 ###########
-# http.cors.enabled: true
-# http.cors.allow-origin: "*"
-# http.cors.allow-credentials: true
+ http.cors.enabled: true
+ http.cors.allow-origin: "*"
+ http.cors.allow-credentials: true
 
 ################################### Gateway ###################################
 # gateway的类型,默认为local即为本地文件系统,可以设置为本地文件系统
