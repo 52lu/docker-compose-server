@@ -156,20 +156,6 @@ services:
       - elasticsearch
     networks:
       - backend
-    ### EsHead ##############################################
-  eshead:
-    container_name: eshead
-    build:
-      context: ./eshead
-    ports:
-      - "${ESHEAD_HTTP_PORT}:9100"
-    environment:
-      - TZ=${TIME_ZONE}
-    depends_on:
-      - elasticsearch
-    networks:
-      - backend
-
   ### MongoDB ##############################################
   mongo:
     build: ./mongo

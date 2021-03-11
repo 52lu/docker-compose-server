@@ -46,8 +46,7 @@ GRAFANA_PORT=5600
 #################### KIBANA ####################
 KIBANA_HTTP_PORT=5601
 KIBANA_VERSION=7.5.0
-#################### EShead ####################
-ESHEAD_HTTP_PORT=9400
+
 
 #################### logstash ####################
 LOGSTASH_VERSION=7.5.0
