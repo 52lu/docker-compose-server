@@ -28,3 +28,6 @@ fastcgi_param  REDIRECT_STATUS    200;
 # 大搜车变量
 fastcgi_param CONF_FILE  /var/www/che168/config.json;
 fastcgi_param ENV dev;
+
+# xhgui-branch PHP性能检测
+fastcgi_param PHP_VALUE "auto_prepend_file=/var/www/xhgui-branch/external/header.php";

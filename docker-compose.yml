@@ -50,6 +50,7 @@ services:
         dockerfile: ./php-fpm/${PHP_VERSION}/Dockerfile
         args:
           - PHP_VERSION=${PHP_VERSION}
+          - INSTALL_XHPROF=${PHP_FPM_INSTALL_XHPROF}
       volumes:
         - ./php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
         - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
