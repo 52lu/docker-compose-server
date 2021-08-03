@@ -1,2 +1,7 @@
 .idea
 logs/*
+.env
+nginx-old
+!nginx/sites/example.conf
+.DS_Store
+nginx/extend

@@ -1,4 +1,4 @@
 * * * * * laradock /usr/bin/php /var/www/artisan schedule:run >> /dev/null 2>&1
 
-# 每1分钟同步个人日记
-* 9-22 * * *  root bash /var/www/my-notes/.script/sync.sh >> /var/log/notes.log
+# 每10分钟同步个人日记
+*/10 9-22 * * *  root bash /var/www/my-notes/.script/sync.sh >> /dev/null 2>&1
