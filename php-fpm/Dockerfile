@@ -6,6 +6,5 @@ LABEL maintainer="liuqinghui <liuqinghui1991@163.com>"
 COPY  ./laravel.ini /usr/local/etc/php/conf.d
 COPY  ./opcache.ini /usr/local/etc/php/conf.d
 COPY  ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
-COPY  ./xlaravel.pool.conf /usr/local/etc/..d/
 
 WORKDIR /var/www
