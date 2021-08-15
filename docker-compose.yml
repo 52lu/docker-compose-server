@@ -20,7 +20,7 @@ volumes:
 
 services:
 
-  ### Workspace Utilities ##################################
+  ################# Workspace Utilities ##################################
   workspace:
     build:
       context: ./workspace
@@ -43,7 +43,7 @@ services:
     links:
       - docker-in-docker
 
-  ### PHP-FPM ##############################################
+  ################# PHP-FPM ##############################################
   php-fpm:
     build:
       context: .
@@ -69,7 +69,7 @@ services:
       - docker-in-docker
 
 
-  ### NGINX Server #########################################
+  ################# NGINX Server #########################################
   nginx:
     build:
       context: ./nginx
@@ -96,7 +96,7 @@ services:
       - frontend
       - backend
 
-  ### MySQL ################################################
+  ################# MySQL ################################################
   mysql:
     build:
       context: ./mysql
@@ -117,7 +117,7 @@ services:
     networks:
       - backend
 
-  ### MongoDB ##############################################
+  ################# MongoDB ##############################################
   mongo:
     build: ./mongo
     ports:
@@ -127,7 +127,7 @@ services:
       - ${DATA_PATH_HOST}/mongo_config:/data/configdb
     networks:
       - backend
-  ### Redis ################################################
+  ################# Redis ################################################
   redis:
     build: ./redis
     volumes:
@@ -137,7 +137,7 @@ services:
     networks:
       - backend
 
-  ### Memcached ############################################
+  ################# Memcached ############################################
   memcached:
     build: ./memcached
     volumes:
@@ -148,9 +148,7 @@ services:
       - php-fpm
     networks:
       - backend
-
-
-  ### RabbitMQ #############################################
+  ################# RabbitMQ #############################################
   rabbitmq:
     build: ./rabbitmq
     ports:
@@ -169,7 +167,7 @@ services:
     networks:
       - backend
 
-  ### ElasticSearch ########################################
+  ################# ElasticSearch ########################################
   elasticsearch:
     build:
       context: ./elasticsearch
@@ -196,7 +194,7 @@ services:
       - frontend
       - backend
 
-  ### Logstash ##############################################
+  ################# Logstash ###########################################
   logstash:
     build:
       context: ./logstash
@@ -217,7 +215,7 @@ services:
     depends_on:
       - elasticsearch
 
-  ### Kibana ##############################################
+  ################# Kibana ##############################################
   kibana:
     build:
       context: ./kibana
@@ -231,7 +229,7 @@ services:
       - frontend
       - backend
 
-  ### Grafana ################################################
+  ################# Grafana ###############################################
   grafana:
     build:
       context: ./grafana
@@ -241,7 +239,7 @@ services:
       - "${GRAFANA_PORT}:3000"
     networks:
       - backend
-  ### Docker-in-Docker ################################################
+  ################# Docker-in-Docker ################################################
   docker-in-docker:
     image: docker:dind
     privileged: true
@@ -252,3 +250,55 @@ services:
       - 2375
     networks:
       - backend
+
+  ################# rocket-mq-server ################################################
+  rmqserver:
+    build:
+      context: ./rocketmq
+      args:
+        - ROCKETMQ_VERSION=${ROCKETMQ_VERSION}
+#    container_name: rmqnamesrv
+    volumes:
+      - ${DATA_PATH_HOST}/rocketmq/data/logs:/opt/logs
+      - ${DATA_PATH_HOST}/rocketmq/data/store:/opt/store
+    ports:
+      - "${ROCKET_SERVER_PORT}:9876"
+    environment:
+      JAVA_OPT_EXT: "-Duser.home=/opt -Xms512M -Xmx512M -Xmn128m"
+      MAX_POSSIBLE_HEAP: 100000000
+    networks:
+      - backend
+  ################# rocket-mq-broker ################################################
+  rmqbroker:
+    build:
+      context: ./rocketmq/broker
+      args:
+        - LOCAL_HOST_IP=${DOCKER_HOST_IP}
+#    container_name: rmqbroker
+    volumes:
+      - ${DATA_PATH_HOST}/rocketmq/data/logs:/opt/logs
+      - ${DATA_PATH_HOST}/rocketmq/data/store:/opt/store
+    ports:
+      - 10909:10909
+      - 10911:10911
+      - 10912:10912
+    command:  sh mqbroker -n rmqserver:9876 -c ../conf/broker.conf
+    depends_on:
+      - rmqserver
+    environment:
+      - JAVA_HOME=/usr/lib/jvm/jre
+    networks:
+      - backend
+  ################# rocket-mq-console ################################################
+  rmqconsole:
+    image: styletang/rocketmq-console-ng
+    ports:
+      - 8087:8080
+    depends_on:
+      - rmqserver
+    environment:
+      - JAVA_OPTS= -Dlogging.level.root=info   -Drocketmq.namesrv.addr=rmqserver:9876
+      - Dcom.rocketmq.sendMessageWithVIPChannel=false
+
+
+
