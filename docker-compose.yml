@@ -111,7 +111,6 @@ services:
     volumes:
       - ${DATA_PATH_HOST}/mysql:/var/lib/mysql
       - ${MYSQL_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
-      - ${MYSQL_GO_ITEM}:/go
     ports:
       - "${MYSQL_PORT}:3306"
     networks:
@@ -252,53 +251,53 @@ services:
       - backend
 
   ################# rocket-mq-server ################################################
-  rmqserver:
+  rocketmq:
     build:
       context: ./rocketmq
       args:
         - ROCKETMQ_VERSION=${ROCKETMQ_VERSION}
-#    container_name: rmqnamesrv
     volumes:
-      - ${DATA_PATH_HOST}/rocketmq/data/logs:/opt/logs
-      - ${DATA_PATH_HOST}/rocketmq/data/store:/opt/store
+      - ${ROCKET_LOGS}:/opt/logs
+      - ${ROCKET_STORE}:/opt/store
     ports:
       - "${ROCKET_SERVER_PORT}:9876"
     environment:
       JAVA_OPT_EXT: "-Duser.home=/opt -Xms512M -Xmx512M -Xmn128m"
       MAX_POSSIBLE_HEAP: 100000000
+    depends_on:
+      - rocketmq-broker
+      - rocketmq-console
     networks:
       - backend
   ################# rocket-mq-broker ################################################
-  rmqbroker:
+  rocketmq-broker:
     build:
       context: ./rocketmq/broker
       args:
         - LOCAL_HOST_IP=${DOCKER_HOST_IP}
-#    container_name: rmqbroker
+        - ROCKETMQ_VERSION=${ROCKETMQ_VERSION}
     volumes:
-      - ${DATA_PATH_HOST}/rocketmq/data/logs:/opt/logs
-      - ${DATA_PATH_HOST}/rocketmq/data/store:/opt/store
+      - ${ROCKET_LOGS}:/opt/logs
+      - ${ROCKET_STORE}:/opt/store
     ports:
       - 10909:10909
       - 10911:10911
       - 10912:10912
-    command:  sh mqbroker -n rmqserver:9876 -c ../conf/broker.conf
-    depends_on:
-      - rmqserver
+    command: sh mqbroker -n rocketmq:9876 -c ../conf/broker.conf
     environment:
       - JAVA_HOME=/usr/lib/jvm/jre
     networks:
       - backend
   ################# rocket-mq-console ################################################
-  rmqconsole:
+  rocketmq-console:
     image: styletang/rocketmq-console-ng
     ports:
       - 8087:8080
-    depends_on:
-      - rmqserver
     environment:
-      - JAVA_OPTS= -Dlogging.level.root=info   -Drocketmq.namesrv.addr=rmqserver:9876
+      - JAVA_OPTS= -Dlogging.level.root=info   -Drocketmq.namesrv.addr=rocketmq:9876
       - Dcom.rocketmq.sendMessageWithVIPChannel=false
+    networks:
+      - backend
 
 
 
