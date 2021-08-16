@@ -127,5 +127,5 @@ MONGODB_PORT=27017
 ROCKETMQ_VERSION=4.4.0
 ROCKET_SERVER_PORT=9876
 ROCKET_BROKER_CONFIG=./rocketmq/config/broker.conf
-ROCKET_LOGS=./rocketmq/data/logs
-ROCKET_STORE=./rocketmq/data/store
+ROCKET_LOGS=./rocketmq/data/logs # 需要单独创建
+ROCKET_STORE=./rocketmq/data/store # 需要单独创建
