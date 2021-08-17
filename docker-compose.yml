@@ -52,6 +52,10 @@ services:
         - PHP_VERSION=${PHP_VERSION}
     volumes:
       - ./php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
+      - ./php-fpm/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+      - ./php-fpm/laravel.ini:/usr/local/etc/php/conf.d/laravel.ini
+      - ./php-fpm/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini
+      - ./php-fpm/xlaravel.pool.conf:/usr/local/etc/php-fpm.d/xlaravel.pool.conf
       - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
     expose:
       - "9000"
@@ -67,7 +71,6 @@ services:
       - backend
     links:
       - docker-in-docker
-
 
   ################# NGINX Server #########################################
   nginx:
