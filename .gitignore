@@ -5,4 +5,7 @@ nginx-old
 !nginx/sites/example.conf
 .DS_Store
 nginx/extend
-rocketmq/data
+rocketmq/data/logs/*
+rocketmq/data/store/*
+!rocketmq/data/logs/README.md
+!rocketmq/data/store/README.md
