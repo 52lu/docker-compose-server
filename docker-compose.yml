@@ -301,6 +301,37 @@ services:
       - Dcom.rocketmq.sendMessageWithVIPChannel=false
     networks:
       - backend
+  ################# pulsar ################################################
+  pulsar:
+    build:
+      context: ./pulsar
+      args:
+        - PULSAR_VERSION=${PULSAR_VERSION}
+    ports:
+      - ${PULSAR_HTTP_PORT}:8080
+      - ${PULSAR_PORT}:6650
+    volumes:
+      - ${DATA_PATH_HOST}/pulsar:/pulsar/data
+      - ${APP_PATH}/pulsar/config:/pulsar/conf
+    depends_on:
+      - pulsar-manage
+    networks:
+      - backend
 
+  ################# pulsar-manage ################################################
+  pulsar-manage:
+    build:
+      context: ./pulsar/manager
+      args:
+        - PULSAR_MANAGER_VERSION=${PULSAR_MANAGER_VERSION}
+    volumes:
+    - ${SPRING_CONFIGURATION_FILE}:/pulsar-manager/pulsar-manager/application.properties
+    ports:
+      - "9527:9527"
+      - "7750:7750"
+    environment:
+      SPRING_CONFIGURATION_FILE: /pulsar-manager/pulsar-manager/application.properties
+    networks:
+      - backend
 
 

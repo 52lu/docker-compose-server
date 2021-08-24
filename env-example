@@ -3,6 +3,7 @@
 ###########################################################
 
 ### Paths #################################################
+APP_PATH=./
 
 # Point to the path of your applications code on your host
 APP_CODE_PATH_HOST=/Users/hui/Project/PHP
@@ -55,7 +56,8 @@ UBUNTU_SOURCE=aliyun
 ### Docker Host IP ########################################
 
 # Enter your Docker Host IP (will be appended to /etc/hosts). Default is `10.0.75.1`
-DOCKER_HOST_IP=你本地的IP#注意后面不要有空格
+#注意后面不要有空格
+DOCKER_HOST_IP=你本地的IP
 
 ### Remote Interpreter ####################################
 
@@ -67,10 +69,11 @@ PHP_IDE_CONFIG=serverName=laradock
 WORKSPACE_SSH_PORT=2222
 WORKSPACE_VSERION_TAG=1.0
 WORKSPACE_PORT_LIST=18080-18090
+WORKSPACE_TIMEZONE=Asia/ShangHai
 
 ### PHP_FPM ###############################################
 PHP_FPM_INSTALL_XHPROF=true
-
+PHP_FPM_FAKETIME=-0
 ### NGINX #################################################
 NGINX_HOST_HTTP_PORT=80
 NGINX_HOST_HTTPS_PORT=443
@@ -126,5 +129,18 @@ MONGODB_PORT=27017
 ROCKETMQ_VERSION=4.4.0
 ROCKET_SERVER_PORT=9876
 ROCKET_BROKER_CONFIG=./rocketmq/config/broker.conf
-ROCKET_LOGS=./rocketmq/data/logs # 需要单独创建
-ROCKET_STORE=./rocketmq/data/store # 需要单独创建
+ROCKET_LOGS=./rocketmq/data/logs
+ROCKET_STORE=./rocketmq/data/store
+
+###### PULSAR ############################################
+PULSAR_VERSION=2.8.0
+PULSAR_HTTP_PORT=9090
+PULSAR_PORT=6650
+###### PULSAR-MANAGER ############################################
+PULSAR_MANAGER_VERSION=v0.2.0
+SPRING_CONFIGURATION_FILE=./pulsar/manager/application.properties
+#### 若要修改密码，需要改配置 ./pulsar/manager/application.properties中的
+# pulsar-manager.account 对应账号
+# pulsar-manager.password 对应密码
+# 默认账号/密码  admin/123456
+########################
