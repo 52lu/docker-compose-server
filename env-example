@@ -148,3 +148,19 @@ SPRING_CONFIGURATION_FILE=./pulsar/manager/application.properties
 # 报错: Empty reply from server,需要等待一会儿，服务还没成功启动
 ####
 
+#################### consul ####################
+CONSUL_VERSION=latest
+
+##################### PROMETHEUS_PORT ########################
+PROMETHEUS_PORT=9091
+
+##################### Zipkin ########################
+ZIPKIN_STORAGE_TYPE=mysql
+ZIPKIN_MYSQL_DB=zipkin
+ZIPKIN_MYSQL_USER=root
+ZIPKIN_MYSQL_PASS=root
+ZIPKIN_MYSQL_HOST=mysql
+ZIPKIN_MYSQL_TCP_PORT=3306
+ZIPKIN_VERSION=latest
+ZIPKIN_PORT=9411
+

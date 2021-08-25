@@ -334,5 +334,51 @@ services:
       SPRING_CONFIGURATION_FILE: /pulsar-manager/pulsar-manager/application.properties
     networks:
       - backend
+  ### consul ##################################
+  consul:
+    build:
+      context: ./consul
+      args:
+        - CONSUL_VERSION=${CONSUL_VERSION}
+    container_name: consul-${CONSUL_VERSION}
+    volumes:
+      - ${VOLUMES_PATH}/consul:/consul/data
+    environment:
+      - TZ=${TIME_ZONE}
+    ports:
+      - "8300-8302:8300-8302"
+      - "8500:8500"
+      - "8600:8600"
+    networks:
+      - backend
+  ### prometheus ################################################
+  prometheus:
+    build:
+      context: ./prometheus
+    volumes:
+      - ./prometheus:/etc/prometheus/
+      - ${VOLUMES_PATH}/prometheus:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    ports:
+      - "${PROMETHEUS_PORT}:9090"
+  ### Zipkin ##############################################
+  zipkin:
+    build: ./zipkin
+    container_name: zipkin
+    ports:
+      - "${ZIPKIN_PORT}:9411"
+    environment:
+      - STORAGE_TYPE=${ZIPKIN_STORAGE_TYPE}
+      - MYSQL_DB=${ZIPKIN_MYSQL_DB}
+      - MYSQL_USER=${ZIPKIN_MYSQL_USER}
+      - MYSQL_PASS=${ZIPKIN_MYSQL_PASS}
+      - MYSQL_HOST=${ZIPKIN_MYSQL_HOST}
+      - MYSQL_TCP_PORT=${ZIPKIN_MYSQL_TCP_PORT}
+      - ZIPKIN_VERSION=${ZIPKIN_VERSION}
+      - TZ=${TIME_ZONE}
 
 
