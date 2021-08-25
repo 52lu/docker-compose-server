@@ -3,8 +3,13 @@
 
 ## 2.配置修改
 
-修改 .env
-```shell script
+### 2.1 第一步复制配置文件
+```shell
+cp env-example .env
+```
+
+### 2.2 修改 .env
+```shell
 # 改成自己电脑的IP
 DOCKER_HOST_IP=改成自己电脑的IP
 

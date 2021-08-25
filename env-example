@@ -6,7 +6,7 @@
 APP_PATH=./
 
 # Point to the path of your applications code on your host
-APP_CODE_PATH_HOST=/Users/hui/Project/PHP
+APP_CODE_PATH_HOST=项目目录父级目录
 
 # Point to where the `APP_CODE_PATH_HOST` should be in the container
 APP_CODE_PATH_CONTAINER=/var/www
