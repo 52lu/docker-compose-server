@@ -145,5 +145,6 @@ PULSAR_MANAGER_VERSION=v0.2.0
 SPRING_CONFIGURATION_FILE=./pulsar/manager/application.properties
 ### 设置登录密码
 # 启动PULSAR-MANAGER后 执行 ./bin/pular_password.sh
+# 报错: Empty reply from server,需要等待一会儿，服务还没成功启动
 ####
 
