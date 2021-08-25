@@ -304,15 +304,16 @@ services:
   ################# pulsar ################################################
   pulsar:
     build:
-      context: ./pulsar
+      context: ./pulsar/server
       args:
         - PULSAR_VERSION=${PULSAR_VERSION}
+        - DOCKER_HOST_IP=${DOCKER_HOST_IP}
     ports:
       - ${PULSAR_HTTP_PORT}:8080
       - ${PULSAR_PORT}:6650
     volumes:
       - ${DATA_PATH_HOST}/pulsar:/pulsar/data
-      - ${APP_PATH}/pulsar/config:/pulsar/conf
+      - ${APP_PATH}/pulsar/server/config:/pulsar/conf
     depends_on:
       - pulsar-manage
     networks:
@@ -325,7 +326,7 @@ services:
       args:
         - PULSAR_MANAGER_VERSION=${PULSAR_MANAGER_VERSION}
     volumes:
-    - ${SPRING_CONFIGURATION_FILE}:/pulsar-manager/pulsar-manager/application.properties
+      - ${SPRING_CONFIGURATION_FILE}:/pulsar-manager/pulsar-manager/application.properties
     ports:
       - "9527:9527"
       - "7750:7750"

@@ -136,11 +136,14 @@ ROCKET_STORE=./rocketmq/data/store
 PULSAR_VERSION=2.8.0
 PULSAR_HTTP_PORT=9090
 PULSAR_PORT=6650
+###### PULSAR ############################################
+PULSAR_VERSION=2.8.0
+PULSAR_HTTP_PORT=9090
+PULSAR_PORT=6650
 ###### PULSAR-MANAGER ############################################
 PULSAR_MANAGER_VERSION=v0.2.0
 SPRING_CONFIGURATION_FILE=./pulsar/manager/application.properties
-#### 若要修改密码，需要改配置 ./pulsar/manager/application.properties中的
-# pulsar-manager.account 对应账号
-# pulsar-manager.password 对应密码
-# 默认账号/密码  admin/123456
-########################
+### 设置登录密码
+# 启动PULSAR-MANAGER后 执行 ./bin/pular_password.sh
+####
+
