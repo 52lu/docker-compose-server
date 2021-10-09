@@ -110,7 +110,7 @@ services:
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - TZ=${WORKSPACE_TIMEZONE}
+      - TZ=${TIME_ZONE}
     volumes:
       - ${DATA_PATH_HOST}/mysql:/var/lib/mysql
       - ${MYSQL_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
@@ -357,7 +357,7 @@ services:
       context: ./prometheus
     volumes:
       - ./prometheus:/etc/prometheus/
-      - ${VOLUMES_PATH}/prometheus:/prometheus
+      - ${DATA_PATH_HOST}/prometheus:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
