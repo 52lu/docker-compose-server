@@ -6,6 +6,7 @@ LABEL maintainer="Hyperf Developers <group@hyperf.io>" version="1.0" license="MI
 
 ARG SWOOLE_VERSION
 ARG COMPOSER_VERSION
+ARG PORT_LIST
 
 ##
 # ---------- env settings ----------
@@ -49,4 +50,4 @@ RUN wget -nv -O /usr/local/bin/composer https://github.com/composer/composer/rel
 
 WORKDIR /var/www
 
-EXPOSE 9500-9505
+EXPOSE 9510-9520

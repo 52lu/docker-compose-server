@@ -391,7 +391,7 @@ services:
         - COMPOSER_VERSION=${COMPOSER_VERSION}
         - ALPINE_VERSION=${ALPINE_VERSION}
     ports:
-      - "9500-9505:9500-9505"
+      - "9510-9520:9510-9520"
     tty: true
     volumes:
       - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
