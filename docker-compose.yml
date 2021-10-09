@@ -50,8 +50,6 @@ services:
       dockerfile: ./php-fpm/Dockerfile
       args:
         - PHP_VERSION=${PHP_VERSION}
-        - PHP_SWOOLE_UPDATE=${PHP_SWOOLE_UPDATE}
-        - PHP_INSTALL_XLSWRITER=${PHP_INSTALL_XLSWRITER}
     volumes:
       - ./php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
       - ./php-fpm/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
@@ -66,7 +64,7 @@ services:
     environment:
       - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
 #      - DOCKER_HOST=tcp://docker-in-docker:2375
-      - FAKETIME=${PHP_FPM_FAKETIME}
+#      - FAKETIME=${PHP_FPM_FAKETIME}
     depends_on:
       - workspace
     networks:
@@ -315,7 +313,7 @@ services:
       - ${PULSAR_PORT}:6650
     volumes:
       - ${DATA_PATH_HOST}/pulsar:/pulsar/data
-      - ${APP_PATH}/pulsar/server/config:/pulsar/conf
+#      - ${APP_PATH}/pulsar/server/config:/pulsar/conf
     depends_on:
       - pulsar-manage
     networks:
@@ -344,7 +342,7 @@ services:
         - CONSUL_VERSION=${CONSUL_VERSION}
     container_name: consul-${CONSUL_VERSION}
     volumes:
-      - ${VOLUMES_PATH}/consul:/consul/data
+      - ${DATA_PATH_HOST}/consul:/consul/data
     environment:
       - TZ=${TIME_ZONE}
     ports:
