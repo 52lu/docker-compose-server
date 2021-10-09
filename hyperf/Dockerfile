@@ -1,52 +1,58 @@
-ARG ALPINE_VERSION
+ARG HYPERF_ALPINE_VERSION
+ARG HYPERF_PHP_VERSION
 
-FROM hyperf/hyperf:7.4-alpine-v${ALPINE_VERSION}-base
+FROM hyperf/hyperf:${HYPERF_PHP_VERSION}-alpine-v${HYPERF_ALPINE_VERSION}-swoole
 
 LABEL maintainer="Hyperf Developers <group@hyperf.io>" version="1.0" license="MIT"
 
-ARG SWOOLE_VERSION
-ARG COMPOSER_VERSION
-ARG PORT_LIST
-
+ARG HYPERF_COMPOSER_VERSION
 ##
-# ---------- env settings ----------
-##
-ENV SWOOLE_VERSION=${SWOOLE_VERSION:-"v4.5.7"} \
-    COMPOSER_VERSION=${COMPOSER_VERSION:-"2.0.2"} \
+ENV HYPERF_COMPOSER_VERSION=${HYPERF_COMPOSER_VERSION:-"2.0.2"} \
     #  install and remove building packages
     PHPIZE_DEPS="autoconf dpkg-dev dpkg file g++ gcc libc-dev make php7-dev php7-pear pkgconf re2c pcre-dev pcre2-dev zlib-dev libtool automake"
 
 # update
 RUN set -ex \
+    # 把 apk 的默认源改为aliyun镜像
+    && sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \
+    # 更新包列表
     && apk update \
-    # for swoole extension libaio linux-headers
     && apk add --no-cache libstdc++ openssl git bash \
     && apk add --no-cache --virtual .build-deps $PHPIZE_DEPS libaio-dev openssl-dev curl-dev
 
-# SWOOLE
-RUN  pecl install -o -f swoole-${SWOOLE_VERSION} \
-         && echo "memory_limit=1G" > /etc/php7/conf.d/00_default.ini \
-         && echo "opcache.enable_cli = 'On'" >> /etc/php7/conf.d/00_opcache.ini \
-         && echo "extension=swoole.so" > /etc/php7/conf.d/50_swoole.ini \
-         && echo "swoole.use_shortname = 'Off'" >> /etc/php7/conf.d/50_swoole.ini
-
-# php extension:xlswriter
+# xlswriter扩展
 RUN pecl install -o -f xlswriter \
     && echo "extension=xlswriter.so" > /etc/php7/conf.d/50_xlswriter.ini
 
 
 # install composer
-RUN wget -nv -O /usr/local/bin/composer https://github.com/composer/composer/releases/download/${COMPOSER_VERSION}/composer.phar \
-    && chmod u+x /usr/local/bin/composer \
-    # php info
-    && php -v \
+RUN wget -nv -O /usr/local/bin/composer https://github.com/composer/composer/releases/download/${HYPERF_COMPOSER_VERSION}/composer.phar \
+    && chmod u+x /usr/local/bin/composer
+
+## 安装sdebug 扩展
+RUN  cd /tmp \
+    # from mirrors
+    && git clone https://gitee.com/vyi/sdebug sdebug \
+    # 进入克隆的目录
+    && cd sdebug \
+    # 切换到 sdebug_2_9 分支，这里一定到切换分支，因为 master 分支是 Xdebug 的源码
+    && git checkout sdebug_2_9 \
+    && phpize \
+    && ./configure --enable-xdebug \
+    && make \
+    && make install \
+    # 这里 安装完成后执行的值 xdebug
+    && docker-php-ext-enable xdebug \
     && php -m \
-    && php --ri swoole \
-    && composer \
-    # ---------- clear works ----------
-    && apk del .build-deps \
-    && rm -rf /var/cache/apk/* /tmp/* /usr/share/man /usr/local/bin/php* \
-    && echo -e "\033[42;37m Build Completed :).\033[0m\n"
+    # 这里检查也是哟,注意是 sdebug
+    && php --ri sdebug \
+
+# 复制配置文件
+COPY ./common.ini /etc/php7/conf.d/50-common.ini
+COPY ./opcache.ini /etc/php7/conf.d/50_opcache.ini
+COPY ./sdebug.ini /etc/php7/conf.d/50_sdebug.ini
+COPY ./swoole.ini /etc/php7/conf.d/50_swoole.ini
+
 
 WORKDIR /var/www
 

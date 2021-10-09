@@ -387,9 +387,9 @@ services:
     build:
       context: ./hyperf
       args:
-        - SWOOLE_VERSION=${SWOOLE_VERSION}
-        - COMPOSER_VERSION=${COMPOSER_VERSION}
-        - ALPINE_VERSION=${ALPINE_VERSION}
+        - HYPERF_COMPOSER_VERSION=${HYPERF_COMPOSER_VERSION}
+        - HYPERF_ALPINE_VERSION=${HYPERF_ALPINE_VERSION}
+        - HYPERF_PHP_VERSION=${HYPERF_PHP_VERSION}
     ports:
       - "9510-9520:9510-9520"
     tty: true
