@@ -67,6 +67,7 @@ services:
       - FAKETIME=${PHP_FPM_FAKETIME}
     depends_on:
       - workspace
+      - nginx
     networks:
       - backend
     links:
