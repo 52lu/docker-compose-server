@@ -36,12 +36,12 @@ services:
     tty: true
     environment:
       - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
-      - DOCKER_HOST=tcp://docker-in-docker:2375
+#      - DOCKER_HOST=tcp://docker-in-docker:2375
     networks:
       - frontend
       - backend
-    links:
-      - docker-in-docker
+#    links:
+#      - docker-in-docker
 
   ################# PHP-FPM ##############################################
   php-fpm:
@@ -63,14 +63,14 @@ services:
       - "dockerhost:${DOCKER_HOST_IP}"
     environment:
       - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
-      - DOCKER_HOST=tcp://docker-in-docker:2375
-      - FAKETIME=${PHP_FPM_FAKETIME}
+#      - DOCKER_HOST=tcp://docker-in-docker:2375
+#      - FAKETIME=${PHP_FPM_FAKETIME}
     depends_on:
       - workspace
     networks:
       - backend
-    links:
-      - docker-in-docker
+#    links:
+#      - docker-in-docker
 
   ################# NGINX Server #########################################
   nginx:
@@ -110,7 +110,7 @@ services:
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - TZ=${WORKSPACE_TIMEZONE}
+      - TZ=${TIME_ZONE}
     volumes:
       - ${DATA_PATH_HOST}/mysql:/var/lib/mysql
       - ${MYSQL_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
@@ -313,7 +313,7 @@ services:
       - ${PULSAR_PORT}:6650
     volumes:
       - ${DATA_PATH_HOST}/pulsar:/pulsar/data
-      - ${APP_PATH}/pulsar/server/config:/pulsar/conf
+#      - ${APP_PATH}/pulsar/server/config:/pulsar/conf
     depends_on:
       - pulsar-manage
     networks:
@@ -342,7 +342,7 @@ services:
         - CONSUL_VERSION=${CONSUL_VERSION}
     container_name: consul-${CONSUL_VERSION}
     volumes:
-      - ${VOLUMES_PATH}/consul:/consul/data
+      - ${DATA_PATH_HOST}/consul:/consul/data
     environment:
       - TZ=${TIME_ZONE}
     ports:
@@ -357,7 +357,7 @@ services:
       context: ./prometheus
     volumes:
       - ./prometheus:/etc/prometheus/
-      - ${VOLUMES_PATH}/prometheus:/prometheus
+      - ${DATA_PATH_HOST}/prometheus:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -380,5 +380,20 @@ services:
       - MYSQL_TCP_PORT=${ZIPKIN_MYSQL_TCP_PORT}
       - ZIPKIN_VERSION=${ZIPKIN_VERSION}
       - TZ=${TIME_ZONE}
-
-
+  ### hyperf ##############################################
+  hyperf:
+    build:
+      context: ./hyperf
+      args:
+        - HYPERF_COMPOSER_VERSION=${HYPERF_COMPOSER_VERSION}
+        - HYPERF_ALPINE_VERSION=${HYPERF_ALPINE_VERSION}
+        - HYPERF_PHP_VERSION=${HYPERF_PHP_VERSION}
+    ports:
+      - "${HYPERF_PORT_LIST}:${HYPERF_PORT_LIST}"
+    tty: true
+    volumes:
+      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+    environment:
+      - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
+    networks:
+      - backend
