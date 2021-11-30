@@ -2,10 +2,10 @@ ARG PHP_VERSION
 FROM registry.cn-beijing.aliyuncs.com/liuqinghui/php-dev-env:php-fpm-${PHP_VERSION}
 LABEL maintainer="liuqinghui <liuqinghui1991@163.com>"
 
-## 安装 Yaf
-#RUN pecl install yaf && docker-php-ext-enable yaf;
-
-
+# 时区
+ARG TZ=UTC
+ENV TZ ${TZ}
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # 配置同步
 #COPY  ./laravel.ini /usr/local/etc/php/conf.d
