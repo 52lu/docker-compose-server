@@ -63,6 +63,7 @@ services:
       - "dockerhost:${DOCKER_HOST_IP}"
     environment:
       - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
+      - TZ=${TIME_ZONE}
 #      - DOCKER_HOST=tcp://docker-in-docker:2375
 #      - FAKETIME=${PHP_FPM_FAKETIME}
     depends_on:
