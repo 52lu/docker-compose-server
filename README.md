@@ -83,3 +83,6 @@ Creating dockcompose_mongo_1 ... done
 dockcompose_mongo_1   docker-entrypoint.sh mongod   Up      0.0.0.0:27017->27017/tcp
 ➜  docker_compose_server git:(master) ✗
 ```
+
+## 6.配置相关文档
+- [基于PHPSTORM 配置 XDEBUG](https://liuqh.icu/2019/03/11/php/php-dockerxdebug/)
