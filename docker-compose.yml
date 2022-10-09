@@ -17,6 +17,8 @@ volumes:
     driver: ${VOLUMES_DRIVER}
   elasticsearch:
     driver: ${VOLUMES_DRIVER}
+  postgres:
+    driver: ${VOLUMES_DRIVER}
 
 services:
 
@@ -36,12 +38,12 @@ services:
     tty: true
     environment:
       - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
-#      - DOCKER_HOST=tcp://docker-in-docker:2375
+    #      - DOCKER_HOST=tcp://docker-in-docker:2375
     networks:
       - frontend
       - backend
-#    links:
-#      - docker-in-docker
+  #    links:
+  #      - docker-in-docker
 
   ################# PHP-FPM ##############################################
   php-fpm:
@@ -64,14 +66,14 @@ services:
     environment:
       - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
       - TZ=${TIME_ZONE}
-#      - DOCKER_HOST=tcp://docker-in-docker:2375
-#      - FAKETIME=${PHP_FPM_FAKETIME}
+    #      - DOCKER_HOST=tcp://docker-in-docker:2375
+    #      - FAKETIME=${PHP_FPM_FAKETIME}
     depends_on:
       - workspace
     networks:
       - backend
-#    links:
-#      - docker-in-docker
+  #    links:
+  #      - docker-in-docker
 
   ################# NGINX Server #########################################
   nginx:
@@ -314,7 +316,7 @@ services:
       - ${PULSAR_PORT}:6650
     volumes:
       - ${DATA_PATH_HOST}/pulsar:/pulsar/data
-#      - ${APP_PATH}/pulsar/server/config:/pulsar/conf
+    #      - ${APP_PATH}/pulsar/server/config:/pulsar/conf
     depends_on:
       - pulsar-manage
     networks:
@@ -398,3 +400,65 @@ services:
       - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
     networks:
       - backend
+    ### pyroscope ##############################################
+  pyroscope:
+    build:
+      context: ./pyroscope
+      args:
+        - PYROSCOPE_VERSION=${PYROSCOPE_VERSION}
+    ports:
+      - ${PYROSCOPE_PORT}:4040
+    networks:
+      - backend
+  ### horod ##############################################
+  hotrod:
+    build:
+      context: ./hotrod
+      args:
+        - HOTROD_VERSION=${HOTROD_VERSION}
+    environment:
+      - JAEGER_AGENT_HOST=jaeger
+      # Note: if your application is using Node.js Jaeger Client, you need port 6832,
+      #       unless issue https://github.com/jaegertracing/jaeger/issues/1596 is resolved.
+      - JAEGER_AGENT_PORT=6831
+    ports:
+      - "${HOTROD_PORT}:8080"
+    depends_on:
+      - jaeger
+    networks:
+      - backend
+  ### jaeger ##############################################
+  jaeger:
+    build:
+      context: ./jaeger
+      args:
+        - JAEGER_VERSION:${JAEGER_VERSION}
+    environment:
+      - COLLECTOR_ZIPKIN_HTTP_PORT=9411
+    ports:
+      - "5775:5775/udp"
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+      - "5778:5778"
+      - "16686:16686"
+      - "14268:14268"
+      - "9411:9411"
+    networks:
+      - backend
+  ### ETCD #################################################
+  etcd:
+    build:
+      context: ./etcd
+      args:
+        - ETCD_VERSION=${ETCD_VERSION}
+    volumes:
+      - ${DATA_PATH_HOST}/etcd:/bitnami/etcd
+    ports:
+      - "${ETCD_PORT}:2379"
+      - "2380:2380"
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
+    networks:
+      - backend
+
