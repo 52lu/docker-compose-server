@@ -166,3 +166,19 @@ ZIPKIN_MYSQL_HOST=mysql
 ZIPKIN_MYSQL_TCP_PORT=3306
 ZIPKIN_VERSION=latest
 ZIPKIN_PORT=9411
+
+##################### pyroscope ########################
+PYROSCOPE_VERSION=latest
+PYROSCOPE_PORT=4040
+
+##################### jaeger ########################
+JAEGER_VERSION=latest
+
+##################### hotrod ########################
+HOTROD_VERSION=latest
+HOTROD_PORT=28080
+
+
+############### ETCD ##################
+ETCD_VERSION=latest
+ETCD_PORT=2379

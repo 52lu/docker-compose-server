@@ -17,6 +17,8 @@ volumes:
     driver: ${VOLUMES_DRIVER}
   elasticsearch:
     driver: ${VOLUMES_DRIVER}
+  postgres:
+    driver: ${VOLUMES_DRIVER}
 
 services:
 
@@ -443,3 +445,20 @@ services:
       - "9411:9411"
     networks:
       - backend
+  ### ETCD #################################################
+  etcd:
+    build:
+      context: ./etcd
+      args:
+        - ETCD_VERSION=${ETCD_VERSION}
+    volumes:
+      - ${DATA_PATH_HOST}/etcd:/bitnami/etcd
+    ports:
+      - "${ETCD_PORT}:2379"
+      - "2380:2380"
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
+    networks:
+      - backend
+
