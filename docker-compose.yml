@@ -285,11 +285,12 @@ services:
     volumes:
       - ${ROCKET_LOGS}:/opt/logs
       - ${ROCKET_STORE}:/opt/store
+      - ${ROCKET_BROKER_CONFIG}:/opt/rocketmq-4.4.0/conf/broker.conf
     ports:
       - 10909:10909
       - 10911:10911
       - 10912:10912
-    command: sh mqbroker -n rocketmq:9876 -c ../conf/broker.conf
+    command: sh mqbroker -n rocketmq:9876 -c /opt/rocketmq-4.4.0/conf/broker.conf
     environment:
       - JAVA_HOME=/usr/lib/jvm/jre
     networks:
