@@ -2,7 +2,8 @@
 logs/*
 .env
 nginx-old
-!nginx/sites/example.conf
+nginx/sites/*
+!nginx/sites/example
 .DS_Store
 nginx/extend
 rocketmq/data/logs/*
