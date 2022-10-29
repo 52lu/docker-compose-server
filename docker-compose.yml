@@ -1,8 +1,6 @@
 version: '3'
 
 networks:
-  frontend:
-    driver: ${NETWORKS_DRIVER}
   backend:
     driver: ${NETWORKS_DRIVER}
 
@@ -40,7 +38,6 @@ services:
       - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
     #      - DOCKER_HOST=tcp://docker-in-docker:2375
     networks:
-      - frontend
       - backend
   #    links:
   #      - docker-in-docker
@@ -99,7 +96,6 @@ services:
     depends_on:
       - php-fpm
     networks:
-      - frontend
       - backend
 
   ################# MySQL ################################################
@@ -196,7 +192,6 @@ services:
     depends_on:
       - php-fpm
     networks:
-      - frontend
       - backend
 
   ################# Logstash ###########################################
@@ -215,7 +210,6 @@ services:
     env_file:
       - .env
     networks:
-      - frontend
       - backend
     depends_on:
       - elasticsearch
@@ -231,7 +225,6 @@ services:
     depends_on:
       - elasticsearch
     networks:
-      - frontend
       - backend
 
   ################# Grafana ###############################################
