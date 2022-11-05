@@ -278,12 +278,12 @@ services:
     volumes:
       - ${ROCKET_LOGS}:/opt/logs
       - ${ROCKET_STORE}:/opt/store
-      - ${ROCKET_BROKER_CONFIG}:/opt/rocketmq-4.4.0/conf/broker.conf
+      - ${ROCKET_BROKER_CONFIG}:/opt/rocketmq/conf/broker.conf
     ports:
       - 10909:10909
       - 10911:10911
       - 10912:10912
-    command: sh mqbroker -n rocketmq:9876 -c /opt/rocketmq-4.4.0/conf/broker.conf
+    command: sh mqbroker -n rocketmq:9876 -c /opt/rocketmq/conf/broker.conf
     environment:
       - JAVA_HOME=/usr/lib/jvm/jre
     networks:
@@ -294,7 +294,7 @@ services:
     ports:
       - 8087:8080
     environment:
-      - JAVA_OPTS= -Dlogging.level.root=info   -Drocketmq.namesrv.addr=rocketmq:9876
+      - JAVA_OPTS= -Dlogging.level.root=debug   -Drocketmq.namesrv.addr=rocketmq:9876
       - Dcom.rocketmq.sendMessageWithVIPChannel=false
     networks:
       - backend
