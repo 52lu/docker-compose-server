@@ -12,5 +12,9 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 #COPY  ./opcache.ini /usr/local/etc/php/conf.d
 #COPY  ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 #COPY  ./xlaravel.pool.conf /usr/local/etc/php-fpm.d/
+# openvpn
+#RUN mkdir -p /dev/net
+#RUN mknod /dev/net/tun c 10 200
+#RUN chmod 666 /dev/net/tun
 
 WORKDIR /var/www

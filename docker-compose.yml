@@ -69,6 +69,9 @@ services:
       - workspace
     networks:
       - backend
+    cap_add:
+      - NET_ADMIN
+    privileged: true
   #    links:
   #      - docker-in-docker
 
