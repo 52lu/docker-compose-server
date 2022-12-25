@@ -10,4 +10,4 @@ rocketmq/data/logs/*
 rocketmq/data/store/*
 !rocketmq/data/logs/README.md
 !rocketmq/data/store/README.md
-ovpn
+openvpn
