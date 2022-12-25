@@ -182,3 +182,12 @@ HOTROD_PORT=28080
 ############### ETCD ##################
 ETCD_VERSION=latest
 ETCD_PORT=2379
+
+### SWAGGER EDITOR  ###########################################
+
+SWAGGER_EDITOR_PORT=5151
+
+### SWAGGER UI  ###############################################
+
+SWAGGER_API_URL=http://generator.swagger.io/api/swagger.json
+SWAGGER_UI_PORT=5555
