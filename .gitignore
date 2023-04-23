@@ -11,3 +11,4 @@ rocketmq/data/store/*
 !rocketmq/data/logs/README.md
 !rocketmq/data/store/README.md
 openvpn
+chineseocr/chineseocr_lite
