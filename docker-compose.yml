@@ -481,6 +481,7 @@ services:
     build: ./chineseocr
     tty: true
     command: sh /data/init.sh
+    restart: always
     environment:
       - TZ=${TIME_ZONE}
     ports:
