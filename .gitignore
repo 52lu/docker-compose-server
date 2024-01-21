@@ -12,3 +12,4 @@ rocketmq/data/store/*
 !rocketmq/data/store/README.md
 openvpn
 chineseocr/chineseocr_lite
+docker-volumes
